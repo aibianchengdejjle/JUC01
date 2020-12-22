@@ -2,48 +2,21 @@ package com.jjle;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ListTest {
 
     public static void main(String[] args) {
-        new Thread(()->{
-            for (int i = 0; i <10000 ; i++) {
-                test Test=new test();
-                Test.c();
-            }
-        },"c").start();
+        List<String>listTest=new CopyOnWriteArrayList<>();
+        //List<String>listTest=new ArrayList<>();
+        for (int i = 0; i <10 ; i++) {
+            new Thread(()->{
+                listTest.add(UUID.randomUUID().toString());
+                System.out.println(listTest);
 
-
-        new Thread(()->{
-            for (int i = 0; i <10000; i++) {
-                test Test1=new test();
-                Test1.d();
-            }
-        },"d").start();
-
-
-        new Thread(()->{
-            for (int i = 0; i <50000 ; i++) {
-                test Test2=new test();
-                Test2.e();
-            }
-        },"e").start();
-    }
-}
-class  test{
-    private static int i=0;
-    public  void c(){
-        i++;
-        System.out.println(Thread.currentThread().getName()+i);
-    }
-
-    public  void d(){
-        i++;
-        System.out.println(Thread.currentThread().getName()+i);
-    }
-    public  void e(){
-        i++;
-        System.out.println(Thread.currentThread().getName()+i);
+            },String.valueOf(i)).start();
+        }
     }
 }
 
